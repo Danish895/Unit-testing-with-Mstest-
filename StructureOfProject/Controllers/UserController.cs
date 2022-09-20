@@ -62,12 +62,12 @@ namespace StructureOfProject.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditPeopleDetailAsync(int id, People peopleDetail)
+        public async Task<ActionResult<People>> EditPeopleDetailAsync(int id, People peopleDetail)
         {
 
-            await _peopleService.UpdatepeopleAsync(id, peopleDetail);
-            await _peopleService.CompleteAsync();
-            return Ok();
+            People updatedOne = await _peopleService.UpdatepeopleAsync(id, peopleDetail);
+            
+            return updatedOne;
         }
 
         // POST: api/StudentDetails
@@ -79,25 +79,23 @@ namespace StructureOfProject.Controllers
             {
                 return Problem("Entity set 'PeopleContext.PeopleDetails'  is null.");
             }
-            _peopleService.AddpersonAsync(peopleDetail);
-            
-            _peopleService.CompleteAsync();
+            People addedPerson = _peopleService.AddpersonAsync(peopleDetail).Result;
 
-            return Ok();
+            return addedPerson;
         }
 
 
         // DELETE: api/StudentDetails/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<People>> DeletePeopleDetailAsync(int id)
+        public async Task<string> DeletePeopleDetailAsync(int id)
         {
             if (_peopleService.DeleteAsync(id) == null)
             {
-                return NotFound();
+                return "This User does not exist";
             }
             var studentDetail = await _peopleService.DeleteAsync(id);
             await _peopleService.CompleteAsync();
-            return Ok(studentDetail);
+            return studentDetail?"This User is deleted": "This user is not deleted";
         }
         //Ms test
     }

@@ -34,13 +34,15 @@ namespace StructureOfProject.Services
 
         public async Task<People> AddpersonAsync(People peopleDetail)
         {
-            var detail = await _peopleRepositories.AddpersonAsync(peopleDetail);
-            return detail;
+            People addedPerson = await _peopleRepositories.AddpersonAsync(peopleDetail);
+            _peopleRepositories.CompleteAsync();
+            return addedPerson;
         }
         public async Task<People> UpdatepeopleAsync(int id, People peopleDetail)
         {
-            var detail = await _peopleRepositories.UpdatepeopleAsync(id, peopleDetail);
-            return detail;
+            People updatedOne = await _peopleRepositories.UpdatepeopleAsync(id, peopleDetail);
+            _peopleRepositories.CompleteAsync();
+            return updatedOne;
         }
 
         public async Task CompleteAsync()

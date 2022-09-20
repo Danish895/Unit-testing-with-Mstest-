@@ -39,9 +39,10 @@ namespace StructureOfProject.DataAccessLayer.Repositories
         {
             _context.Peoples.Add(peopleDetail);
             await _context.SaveChangesAsync();
-            return await _context.Peoples.FindAsync(peopleDetail.Id);
-
+            People addedPerson =  await _context.Peoples.FindAsync(peopleDetail.Id);
+            return addedPerson;
         }
+
         public async Task<People> UpdatepeopleAsync(int id, People personDetail)
         {
             People personToBeUpdated = await _context.Peoples.Where(x => x.Id == id).FirstOrDefaultAsync();
@@ -49,7 +50,8 @@ namespace StructureOfProject.DataAccessLayer.Repositories
             if (personDetail.Name != null) { personToBeUpdated.Name = personDetail.Name.Trim(); }
             
             await _context.SaveChangesAsync();
-            return await _context.Peoples.FindAsync(id);
+            People updatedOne = await _context.Peoples.FindAsync(id);
+            return updatedOne;
         }
         public async Task CompleteAsync()
         {
