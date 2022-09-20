@@ -32,10 +32,10 @@ Log.Logger = new LoggerConfiguration()
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
-    app.UseSerilogRequestLogging(configure =>
-    {
-        configure.MessageTemplate = "HTTP Hello {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000}ms";
-    });
+    app.UseSerilogRequestLogging(//configure =>
+    
+       // configure.MessageTemplate = "HTTP Hello {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000}ms";
+    );
 
     if (app.Environment.IsDevelopment())
     {
@@ -44,6 +44,7 @@ Log.Logger = new LoggerConfiguration()
     }
 
     app.UseMiddleware<HttpInformationMiddleware>();
+    app.UseMiddleware<GlobalExceptionErrorHandlingMiddleWare>();
 
     app.UseHttpsRedirection();
     app.UseAuthorization();

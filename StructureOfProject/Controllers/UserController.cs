@@ -41,9 +41,20 @@ namespace StructureOfProject.Controllers
             return "I am response from post controller" ;
         }
 
+        [Route("DividedByZero")]
+        [HttpGet]
+        public int sdfghjk()
+        {
+            int b = 3;
+            int c = 0;
+            int a = b / c;
+            return c;
+        }
+
         [HttpGet]
         public async Task<IEnumerable<People>> GetPeople()
         {
+            throw new AccessViolationException("Violation Exception while accessing the resource.");
             var Detail = await _peopleService.GetPeopleAsync();
             return Detail;
         }
@@ -64,7 +75,7 @@ namespace StructureOfProject.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<People>> EditPeopleDetailAsync(int id, People peopleDetail)
         {
-
+            
             People updatedOne = await _peopleService.UpdatepeopleAsync(id, peopleDetail);
             
             return updatedOne;
