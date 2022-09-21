@@ -1956,6 +1956,7 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "6.0.9",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.9",
+          "Moq": "4.18.2",
           "Serilog.AspNetCore": "6.0.1",
           "Serilog.Filters.Expressions": "2.1.0",
           "Serilog.Sinks.MSSqlServer": "5.7.1",

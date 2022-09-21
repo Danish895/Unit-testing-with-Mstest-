@@ -1,4 +1,5 @@
 ﻿using StructureOfProject.Models;
+using System.Linq.Expressions;
 
 namespace StructureOfProject.Services
 {
@@ -10,6 +11,6 @@ namespace StructureOfProject.Services
         Task<People> AddpersonAsync(People people);
         Task<People> UpdatepeopleAsync(int id, People people);
         Task CompleteAsync();
-        
+        Task<People> FirstOrDefaultByNameAsync(Expression<Func<People, bool>> predicate);
     }
 }

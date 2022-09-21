@@ -1,17 +1,18 @@
 ﻿using StructureOfProject.DataAccessLayer.ApplicationDbContext.AppDbContext;
 using StructureOfProject.DataAccessLayer.Repositories;
 using StructureOfProject.Models;
+using System.Linq.Expressions;
 
 namespace StructureOfProject.Services
 {
     public class PeopleService : IPeopleService
     {
-        private IPeopleRepositories _peopleRepositories;
+        protected IPeopleRepositories _peopleRepositories;
 
 
-        public PeopleService(IPeopleRepositories peopleRepositories)
+        public PeopleService(IServiceProvider serviceProvider)
         {
-            _peopleRepositories = peopleRepositories;
+            _peopleRepositories = serviceProvider.GetRequiredService<IPeopleRepositories>();
         }
 
         public async Task<IEnumerable<People>> GetPeopleAsync()
@@ -50,5 +51,9 @@ namespace StructureOfProject.Services
             await _peopleRepositories.CompleteAsync();
         }
 
+        public virtual Task<People> FirstOrDefaultByNameAsync(Expression<Func<People, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

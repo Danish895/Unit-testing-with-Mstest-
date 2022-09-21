@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using Serilog;
-
+using StructureOfProject.DataAccessLayer.ApplicationDbContext.AppDbContext;
+using StructureOfProject.DataAccessLayer.Repositories;
 using StructureOfProject.Models;
 using StructureOfProject.Services;
 
@@ -14,19 +16,19 @@ namespace StructureOfProject.Controllers
 
         private readonly ILogger<UserController> _logger;
         private IPeopleService _peopleService;
-        
 
-        public UserController(ILogger<UserController> logger, IPeopleService peopleService)
+
+        public UserController(IServiceProvider serviceProvider,ILogger<UserController> logger)
         {
             _logger = logger;
-            _peopleService = peopleService;
+            _peopleService = serviceProvider.GetRequiredService<PeopleApiService>();
         }
 
         [Route("GetInfoByName/{Name}")]
         [HttpGet]
         public string get(int Value, string Name)
         {
-            _logger.LogInformation("Hello !!_peopleService You are in the Controller!");
+            //_logger.LogInformation("Hello !!_peopleService You are in the Controller!");
             //Log.Information("No one listens to me!");
             return "I am response from get controller" + " "+ Value + Name;
         }
@@ -37,7 +39,6 @@ namespace StructureOfProject.Controllers
         {
             _logger.LogInformation("No one listens to me!");
             //Log.Information("No one listens to me!");
-
             return "I am response from post controller" ;
         }
 
@@ -54,7 +55,8 @@ namespace StructureOfProject.Controllers
         [HttpGet]
         public async Task<IEnumerable<People>> GetPeople()
         {
-            throw new AccessViolationException("Violation Exception while accessing the resource.");
+            throw new Exception("Exception while fetching all the students from the storage.");
+            //throw new AccessViolationException("Violation Exception while accessing the resource.");
             var Detail = await _peopleService.GetPeopleAsync();
             return Detail;
         }
@@ -77,7 +79,6 @@ namespace StructureOfProject.Controllers
         {
             
             People updatedOne = await _peopleService.UpdatepeopleAsync(id, peopleDetail);
-            
             return updatedOne;
         }
 
@@ -91,7 +92,6 @@ namespace StructureOfProject.Controllers
                 return Problem("Entity set 'PeopleContext.PeopleDetails'  is null.");
             }
             People addedPerson = _peopleService.AddpersonAsync(peopleDetail).Result;
-
             return addedPerson;
         }
 
@@ -109,5 +109,29 @@ namespace StructureOfProject.Controllers
             return studentDetail?"This User is deleted": "This user is not deleted";
         }
         //Ms test
+
+        [Route("SearchByName/{Name}")]
+        [HttpGet]
+        public async Task<People> FirstOrDefaultAsync(string Name)
+        {
+            var detail = await _peopleService.FirstOrDefaultByNameAsync(x => x.Name == Name);
+            return detail;
+        }
+
+        //[Route("Getallpeoples")]
+        //[HttpGet]
+        //public async Task<IEnumerable<People>> GetPeopleNameghj()
+        //{
+        //    //throw new Exception("Exception while fetching all the students from the storage.");
+        //    //throw new AccessViolationException("Violation Exception while accessing the resource.");
+        //    //var mockRepositories = new Mock<IPeopleRepositories>();
+        //    //var mockRepositories = new PeopleRepositories();
+
+        //    var repo = new PeopleRepositories(_context);
+        //    var peopleApiService = new PeopleApiService(repo);
+        //    var Detail = await peopleApiService.GetPeopleAsync();
+            
+        //    return Detail;
+        //}
     }
 }

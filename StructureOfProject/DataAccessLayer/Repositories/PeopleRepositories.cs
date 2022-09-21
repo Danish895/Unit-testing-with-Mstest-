@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StructureOfProject.DataAccessLayer.ApplicationDbContext.AppDbContext;
 using StructureOfProject.Models;
-
+using System.Linq.Expressions;
 
 namespace StructureOfProject.DataAccessLayer.Repositories
 {
@@ -25,6 +25,11 @@ namespace StructureOfProject.DataAccessLayer.Repositories
         public async Task<People> GetByIdAsync(int id)
         {
             return await _context.Peoples.FindAsync(id);
+        }
+
+        public async Task<People> GetByNameAsync(Expression<Func<People, bool>> predicate)
+        {
+            return await _context.Set<People>().FirstOrDefaultAsync(predicate);
         }
 
         public async Task<bool> DeleteAsync(int id)

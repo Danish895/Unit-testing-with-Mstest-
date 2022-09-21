@@ -1,4 +1,5 @@
 ﻿using StructureOfProject.Models;
+using System.Linq.Expressions;
 
 namespace StructureOfProject.DataAccessLayer.Repositories
 {
@@ -10,5 +11,6 @@ namespace StructureOfProject.DataAccessLayer.Repositories
         Task<People> AddpersonAsync(People people);
         Task<People> UpdatepeopleAsync(int id, People people);
         Task CompleteAsync();
+        Task<People> GetByNameAsync(Expression<Func<People, bool>> predicate);
     }
 }

@@ -126,7 +126,7 @@ namespace StructureOfProject.UnitTests
             var contentresult = await controller.EditPeopleDetailAsync(P.Id, P);
 
             //Assert
-            Assert.AreEqual(P, contentresult.Value);
+            Assert.AreEqual(P, contentresult);
             
         }
 

@@ -26,8 +26,11 @@ Log.Logger = new LoggerConfiguration()
     });
 
     builder.Services.AddScoped<IPeopleService, PeopleService>();
+   // builder.Services.AddScoped<IPeopleService, PeopleApiService>();
 
     builder.Services.AddScoped<IPeopleRepositories, PeopleRepositories>();
+
+    builder.Services.AddScoped<PeopleApiService>();
 
     var app = builder.Build();
 

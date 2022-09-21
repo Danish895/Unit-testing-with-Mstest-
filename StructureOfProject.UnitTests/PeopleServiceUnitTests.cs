@@ -80,6 +80,7 @@ namespace StructureOfProject.UnitTests
             var mockRepositories = new Mock<IPeopleRepositories>();
             mockRepositories.Setup(x => x.GetByIdAsync(1))
                 .ReturnsAsync(P);
+            Console.WriteLine(mockRepositories);
 
             var peopleService = new PeopleService(mockRepositories.Object);
 

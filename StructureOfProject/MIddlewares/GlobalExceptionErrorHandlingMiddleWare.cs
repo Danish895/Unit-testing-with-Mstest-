@@ -27,11 +27,13 @@ namespace StructureOfProject.MIddlewares
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+           // context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
             await context.Response.WriteAsync(new ErrorDetails()
             {
                 StatusCode = context.Response.StatusCode,
-                Message = exception.Message,
+                Message = exception.Message
+                
             }.ToString());
         }
     }
