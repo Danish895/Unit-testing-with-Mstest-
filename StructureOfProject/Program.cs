@@ -5,6 +5,7 @@ using StructureOfProject.DataAccessLayer.ApplicationDbContext.AppDbContext;
 using StructureOfProject.DataAccessLayer.Repositories;
 using StructureOfProject.MIddlewares;
 using StructureOfProject.Services;
+using StructureOfProject.TextInput;
 
 Log.Logger = new LoggerConfiguration()
             .CreateLogger();
@@ -16,10 +17,12 @@ Log.Logger = new LoggerConfiguration()
         .ReadFrom.Configuration(context.Configuration)
         .ReadFrom.Services(services)
         .Enrich.FromLogContext());
-
+    //builder.Services.AddControllers(o => o.InputFormatters.Insert(o.InputFormatters.Count, new TextPlainInputFormatter()));
+    builder.Services.AddControllersWithViews().AddXmlSerializerFormatters();
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+    
 
     builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

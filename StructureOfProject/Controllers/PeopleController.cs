@@ -13,7 +13,6 @@ namespace StructureOfProject.Controllers
     [Route("api/[Controller]")]
     public class UserController : ControllerBase
     {
-
         private readonly ILogger<UserController> _logger;
         private IPeopleService _peopleService;
 

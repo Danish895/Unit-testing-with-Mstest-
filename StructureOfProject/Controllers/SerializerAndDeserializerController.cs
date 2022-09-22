@@ -37,8 +37,6 @@ namespace StructureOfProject.Controllers
             //    Id = 1,
             //    Name = "Hot"
             //};
-             
-
            // string jsonString = File.ReadAllText(fileName);
 
             //string jsonString = JsonSerializer.Deserialize(serializedString);
@@ -55,7 +53,6 @@ namespace StructureOfProject.Controllers
         public void getXmlSerialized()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(People));
-
             //People i = new People();
             //i.Id = 2;
             //i.Name = "Regular Danish";
@@ -67,7 +64,6 @@ namespace StructureOfProject.Controllers
             };
 
             string filename = "xmlSerializer.xml";
-            
             FileStream fs = new FileStream(filename, FileMode.Create);
             TextWriter writer = new StreamWriter(fs, new UTF8Encoding());
             
@@ -80,7 +76,6 @@ namespace StructureOfProject.Controllers
         public void getXmlDesrialized()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(People));
-
             People people;
             string filename = "xmlSerializer.xml";
 
